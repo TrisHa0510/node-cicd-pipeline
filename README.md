@@ -1,6 +1,6 @@
 readme_content = """# 🚀 Node.js CI/CD Pipeline
 
-![CI/CD Status](https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/main.yml/badge.svg)
+![CI/CD Status](https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/ci-cd.yml/badge.svg)
 ![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white)
 ![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js&logoColor=white)
