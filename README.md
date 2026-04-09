@@ -3,7 +3,7 @@ readme_content = """<div align="center">
 # ⚙️ Automated Node.js CI/CD Pipeline
 
 <p align="center">
-  <img src="https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/main.yml/badge.svg" alt="CI/CD Pipeline"/>
+  <img src="https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/ci-cd.yml/badge.svg" alt="CI/CD Pipeline"/>
   &nbsp;
   <img src="https://img.shields.io/badge/Node.js-20-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js"/>
   &nbsp;
@@ -118,7 +118,7 @@ docker run -p 3000:3000 node-cicd-pipeline
 
 | GitHub Actions | Deployed App |
 |---|---|
-| *(Add screenshot of green pipeline)* | *(Add screenshot of live app)* |
+| ![Pipeline](./assets/pipeline.png) | ![App](./assets/app.png) |
 
 > To add screenshots: create an `assets/` folder, add `.png` files, and replace the placeholders above with `![Pipeline](./assets/pipeline.png)`
 
