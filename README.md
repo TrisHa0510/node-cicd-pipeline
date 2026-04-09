@@ -1,185 +1,158 @@
-readme_content = """# 🚀 Node.js CI/CD Pipeline
+readme_content = """<div align="center">
 
-![CI/CD Status](https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/ci-cd.yml/badge.svg)
-![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white)
-![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Automated-2088FF?logo=githubactions&logoColor=white)
+# ⚙️ Automated Node.js CI/CD Pipeline
 
-> A fully automated CI/CD pipeline that builds, tests, containerizes, and deploys a Node.js web application on every push to `main` — with zero manual intervention.
+<p align="center">
+  <img src="https://github.com/TrisHa0510/node-cicd-pipeline/actions/workflows/main.yml/badge.svg" alt="CI/CD Pipeline"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Node.js-20-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Docker-Containerized-2496ED?style=flat&logo=docker&logoColor=white" alt="Docker"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Render-Live-46E3B7?style=flat&logo=render&logoColor=white" alt="Render"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/GitHub_Actions-Automated-2088FF?style=flat&logo=github-actions&logoColor=white" alt="GitHub Actions"/>
+</p>
+
+<p align="center">
+  <i>Push code → Tests run → Docker image built → App deployed. Automatically.</i>
+</p>
+
+</div>
 
 ---
 
-## 🔄 Pipeline Flow
+## 📖 About
+
+This project demonstrates a production-grade **CI/CD pipeline** using modern DevOps tools. Every push to the `main` branch automatically triggers a 3-stage pipeline — no manual steps required.
+
+- 🔁 **Continuous Integration** — code is built and tested on every push
+- 🐳 **Containerization** — Docker image is built and pushed to Docker Hub
+- 🚀 **Continuous Deployment** — app is deployed to Render automatically
+
+---
+
+## 🔄 Pipeline Architecture
 
 ```mermaid
-flowchart TD
-    A[👨‍💻 Developer pushes code] --> B[GitHub detects push to main]
-    B --> C[🧪 Job 1: Build & Test]
-    C -->|npm ci + npm test| D{Tests Passed?}
-    D -->|❌ Fail| E[🚫 Pipeline Stops\nDev gets notified]
-    D -->|✅ Pass| F[🐳 Job 2: Docker Build & Push]
-    F -->|Build image + push to Docker Hub| G[🚀 Job 3: Deploy to Render]
-    G -->|Trigger deploy hook| H[🌐 App Live on Render]
+flowchart LR
+    A([👨‍💻 git push]) --> B[GitHub\nActions]
+    B --> C[🧪 Build\n& Test]
+    C --> D{Tests\nPassed?}
+    D -- ❌ Fail --> E([🚫 Pipeline\nStopped])
+    D -- ✅ Pass --> F[🐳 Docker\nBuild & Push]
+    F --> G[🚀 Deploy\nto Render]
+    G --> H([🌐 App\nLive])
 
-    style A fill:#4CAF50,color:#fff
-    style H fill:#46E3B7,color:#fff
-    style E fill:#f44336,color:#fff
+    style A fill:#238636,color:#fff,stroke:none
+    style H fill:#46E3B7,color:#000,stroke:none
+    style E fill:#da3633,color:#fff,stroke:none
+    style D fill:#1f6feb,color:#fff,stroke:none
 ```
-
----
-
-## 📌 Project Overview
-
-This project demonstrates end-to-end **DevOps automation** using GitHub Actions, Docker, and Render. Every code push triggers a 3-stage pipeline:
-
-- ✅ **Continuous Integration** — auto build and test on every push
-- ✅ **Containerization** — Docker image built and pushed to registry
-- ✅ **Continuous Deployment** — auto deploy to cloud on every successful build
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| ![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white) | Web application runtime |
-| ![GitHub Actions](https://img.shields.io/badge/-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white) | CI/CD pipeline automation |
-| ![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white) | Containerization |
-| ![Docker Hub](https://img.shields.io/badge/-Docker%20Hub-2496ED?logo=docker&logoColor=white) | Container image registry |
-| ![Render](https://img.shields.io/badge/-Render-46E3B7?logo=render&logoColor=white) | Cloud deployment platform |
+<div align="center">
+
+| Layer | Technology | Role |
+|-------|-----------|------|
+| **App** | Node.js 20 + Express | Web server |
+| **Pipeline** | GitHub Actions | CI/CD automation |
+| **Container** | Docker + Docker Hub | Build & registry |
+| **Deploy** | Render | Cloud hosting |
+| **Security** | GitHub Secrets | Credential management |
+
+</div>
 
 ---
 
 ## 📁 Project Structure
 
 ```
-node-cicd-pipeline/
-├── .github/
-│   └── workflows/
-│       └── main.yml        # ⚙️ GitHub Actions CI/CD workflow
-├── Dockerfile              # 🐳 Docker container configuration
-├── server.js               # 🟢 Main Node.js application
-├── package.json            # 📦 Dependencies and scripts
-└── README.md               # 📄 Project documentation
+📦 node-cicd-pipeline
+ ┣ 📂 .github
+ ┃ ┗ 📂 workflows
+ ┃   ┗ 📜 main.yml        ← CI/CD pipeline definition
+ ┣ 📜 Dockerfile           ← Container build instructions
+ ┣ 📜 server.js            ← Node.js application entry point
+ ┣ 📜 package.json         ← Dependencies & npm scripts
+ ┗ 📜 README.md
 ```
 
 ---
 
-## ⚙️ GitHub Actions Workflow
+## 🔐 Secrets Configuration
 
-### 🧪 Job 1 — Build & Test
-```yaml
-- Checkout code
-- Setup Node.js 20
-- npm ci              # clean install
-- npm test            # run test suite
-```
+> **Repo → Settings → Secrets and Variables → Actions → New repository secret**
 
-### 🐳 Job 2 — Docker Build & Push
-```yaml
-- Setup Docker Buildx
-- Login to Docker Hub
-- Build Docker image
-- Push image → Docker Hub as :latest
-```
-
-### 🚀 Job 3 — Deploy to Render
-```yaml
-- Trigger Render deploy hook (HTTP POST)
-- Render pulls latest Docker image
-- App redeployed automatically
-```
+| Secret | Value |
+|--------|-------|
+| `DOCKERHUB_USERNAME` | Your Docker Hub username |
+| `DOCKERHUB_TOKEN` | Docker Hub access token (not password) |
+| `RENDER_DEPLOY_HOOK` | Deploy hook URL from Render dashboard |
 
 ---
 
-## 🐳 Run Locally with Docker
+## 🐳 Run Locally
 
 ```bash
-# Clone the repo
+# Clone
 git clone https://github.com/TrisHa0510/node-cicd-pipeline.git
 cd node-cicd-pipeline
 
-# Build Docker image
-docker build -t node-cicd-pipeline .
+# Option 1 — Node directly
+npm install && node server.js
 
-# Run container
+# Option 2 — Docker
+docker build -t node-cicd-pipeline .
 docker run -p 3000:3000 node-cicd-pipeline
 ```
 
-🌐 App runs at: `http://localhost:3000`
-
----
-
-## 🔐 GitHub Secrets Required
-
-> Go to **Repo → Settings → Secrets and Variables → Actions**
-
-| Secret Name | Description |
-|-------------|-------------|
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Your Docker Hub access token |
-| `RENDER_DEPLOY_HOOK` | Your Render service deploy hook URL |
-
----
-
-## 🚀 Getting Started (Without Docker)
-
-```bash
-# Clone the repository
-git clone https://github.com/TrisHa0510/node-cicd-pipeline.git
-
-# Install dependencies
-cd node-cicd-pipeline
-npm install
-
-# Start the app
-node server.js
-```
+> App available at `http://localhost:3000`
 
 ---
 
 ## 📸 Pipeline in Action
 
-> ✅ GitHub Actions — All jobs passing
+| GitHub Actions | Deployed App |
+|---|---|
+| *(Add screenshot of green pipeline)* | *(Add screenshot of live app)* |
 
-<!-- Add screenshot of GitHub Actions green pipeline here -->
-<!-- Example: ![Pipeline Screenshot](./assets/pipeline-screenshot.png) -->
-
-> 🌐 App deployed live on Render
-
-<!-- Add screenshot of running app here -->
-<!-- Example: ![App Screenshot](./assets/app-screenshot.png) -->
+> To add screenshots: create an `assets/` folder, add `.png` files, and replace the placeholders above with `![Pipeline](./assets/pipeline.png)`
 
 ---
 
-## 💡 Key Concepts
+## 💡 CI/CD Concepts
 
-| Concept | Explanation |
-|---------|-------------|
-| **CI (Continuous Integration)** | Auto-build and test every code push |
-| **CD (Continuous Deployment)** | Auto-deploy after every successful test |
-| **Docker** | Packages app into a container — runs anywhere |
-| **GitHub Secrets** | Stores credentials safely, never hardcoded |
-| **Render Deploy Hook** | URL that triggers redeployment when called |
+| Term | Meaning |
+|------|---------|
+| **CI** | Auto-build and test on every code push |
+| **CD** | Auto-deploy after every successful test |
+| **Docker Image** | Packaged app that runs identically everywhere |
+| **Deploy Hook** | A URL that triggers redeployment when called |
+| **GitHub Secrets** | Encrypted storage for tokens and credentials |
 
 ---
+
+<div align="center">
 
 ## 👩‍💻 Author
 
 **Trisha Patil**
-- 📧 23amtics036@gmail.com
-- 🐙 [GitHub @TrisHa0510](https://github.com/TrisHa0510)
 
----
+[![GitHub](https://img.shields.io/badge/GitHub-TrisHa0510-181717?style=flat&logo=github)](https://github.com/TrisHa0510)
+[![Email](https://img.shields.io/badge/Email-23amtics036@gmail.com-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:23amtics036@gmail.com)
 
-## 📄 License
+<br/>
 
-This project is open source and available under the [MIT License](LICENSE).
+*Made with ❤️ as part of a DevOps learning project*
+
+</div>
 """
 
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(readme_content)
 
 print("README.md created!")
-print(f"Characters: {len(readme_content)}")
